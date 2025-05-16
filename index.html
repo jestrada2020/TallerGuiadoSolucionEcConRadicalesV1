@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller Guiado: Solución Paso a Paso de Ecuaciones con Radicales</title>
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- MathJax -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 10px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #f9fafb;
+        }
+        
+        h1 {
+            color: #1e40af;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1e40af;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #2563eb;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #2563eb;
+        }
+        
+        .equation-container {
+            background-color: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .equation-header {
+            background-color: #dbeafe;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 6px 6px 0 0;
+        }
+        
+        .equation-title {
+            font-weight: 600;
+            color: #1e40af;
+            font-size: 1.1rem;
+        }
+        
+        .equation-body {
+            padding: 20px;
+        }
+        
+        .step-container {
+            border-left: 3px solid #2563eb;
+            padding-left: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .step-header {
+            font-weight: 600;
+            color: #2563eb;
+            margin-bottom: 5px;
+        }
+        
+        .concept {
+            background-color: #f0f9ff;
+            border-left: 3px solid #0ea5e9;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        
+        .concept-title {
+            font-weight: 600;
+            color: #0ea5e9;
+            margin-bottom: 5px;
+        }
+        
+        .mathbox {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            overflow-x: auto;
+            text-align: center;
+        }
+        
+        .restriction {
+            background-color: #fff7ed;
+            border-left: 3px solid #f97316;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        
+        .restriction-title {
+            font-weight: 600;
+            color: #f97316;
+            margin-bottom: 5px;
+        }
+        
+        .solution {
+            background-color: #ecfdf5;
+            border-left: 3px solid #10b981;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        
+        .solution-title {
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 5px;
+        }
+        
+        .verification {
+            background-color: #f0fdf4;
+            border: 1px dashed #16a34a;
+            border-radius: 4px;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        
+        .verification-title {
+            font-weight: 600;
+            color: #16a34a;
+            margin-bottom: 5px;
+        }
+        
+        .step-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #1e40af;
+        }
+        
+        button:disabled {
+            background-color: #93c5fd;
+            cursor: not-allowed;
+        }
+        
+        .step-indicator {
+            padding: 8px 16px;
+            color: #4b5563;
+            font-weight: 500;
+        }
+        
+        .hidden {
+            display: none;
+        }
+
+        /* Optimizaciones para PDF */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .equation-container {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            
+            .step-navigation {
+                display: none;
+            }
+            
+            /* Mostrar todos los pasos en PDF */
+            .hidden {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Taller Guiado: Solución Paso a Paso de Ecuaciones con Radicales</h1>
+    
+    <div class="intro bg-blue-50 p-4 mb-8 rounded-md">
+        <p>Este taller presenta la solución detallada de ecuaciones con radicales, desarrollando cada paso del proceso y explicando los conceptos matemáticos aplicados. Cada ejercicio incluye:</p>
+        <ul class="list-disc pl-6 mt-2">
+            <li><strong>Ecuación original</strong> - El planteamiento inicial del problema</li>
+            <li><strong>Restricciones</strong> - Condiciones que debe cumplir la variable por la presencia de radicales</li>
+            <li><strong>Proceso de resolución</strong> - Secuencia ordenada de transformaciones algebraicas</li>
+            <li><strong>Verificación</strong> - Comprobación de las soluciones en la ecuación original</li>
+        </ul>
+        <p class="mt-2 text-blue-700 font-medium">Sigue los pasos usando los botones de navegación o visualiza todos los pasos a la vez para un mejor entendimiento.</p>
+    </div>
+
+    <!-- Ejercicio 1 -->
+    <div class="equation-container" id="equation1">
+        <div class="equation-header">
+            <div class="equation-title">Ejercicio 1: \(x=4+\sqrt{4x-19}\)</div>
+        </div>
+        <div class="equation-body">
+            <div class="step-container">
+                <div class="step-header">Ecuación original:</div>
+                <div class="mathbox">
+
+                    \[ x=4+\sqrt{4x-19} \]
+                </div>
+            </div>
+            
+            <div class="restriction">
+                <div class="restriction-title">Restricción:</div>
+                <p>El radicando debe ser no negativo:</p>
+                <div class="mathbox">
+
+                    \[ 4x-19 \geq 0 \implies 4x \geq 19 \implies x \geq \frac{19}{4} = 4.75 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="1" data-step="1">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Aislar el término con la raíz cuadrada restando 4 de ambos lados.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ x - 4 = \sqrt{4x-19} \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="1" data-step="2">
+                <div class="restriction">
+                    <div class="restriction-title">Restricción implícita:</div>
+                    <p>El lado izquierdo debe ser no negativo para que sea igual a la raíz cuadrada principal:</p>
+                    <div class="mathbox">
+
+                        \[ x-4 \geq 0 \implies x \geq 4 \]
+                    </div>
+                    <p>Combinando las restricciones, debemos tener:</p>
+                    <div class="mathbox">
+
+                        \[ x \geq \max\left(\frac{19}{4}, 4\right) = \frac{19}{4} = 4.75 \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step" data-equation="1" data-step="3">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Elevar ambos lados al cuadrado para eliminar la raíz cuadrada.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ (x - 4)^2 = (\sqrt{4x-19})^2 \]
+
+                    \[ x^2 - 8x + 16 = 4x - 19 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="1" data-step="4">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Reorganizar la ecuación para formar una ecuación cuadrática.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ x^2 - 8x - 4x + 16 + 19 = 0 \]
+
+                    \[ x^2 - 12x + 35 = 0 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="1" data-step="5">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Factorizar el trinomio cuadrado. Buscamos dos números que multiplicados den 35 y sumados den -12. Los números son -5 y -7.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ (x - 5)(x - 7) = 0 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="1" data-step="6">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Establecer cada factor igual a cero y resolver para \(x\).</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ x - 5 = 0 \implies x = 5 \]
+
+                    \[ x - 7 = 0 \implies x = 7 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="1" data-step="7">
+                <div class="verification">
+                    <div class="verification-title">Verificación:</div>
+                    <p><strong>Para \(x=5\):</strong></p>
+                    <ul>
+                        <li>Restricción \(5 \geq 4.75\) es verdadera.</li>
+                        <li>Sustituyendo:
+
+                            \[ 5 = 4 + \sqrt{4(5)-19} = 4 + \sqrt{20-19} = 4 + \sqrt{1} = 4 + 1 = 5 \]
+                        </li>
+                        <li>La solución es válida.</li>
+                    </ul>
+                    <p class="mt-2"><strong>Para \(x=7\):</strong></p>
+                    <ul>
+                        <li>Restricción \(7 \geq 4.75\) es verdadera.</li>
+                        <li>Sustituyendo:
+
+                            \[ 7 = 4 + \sqrt{4(7)-19} = 4 + \sqrt{28-19} = 4 + \sqrt{9} = 4 + 3 = 7 \]
+                        </li>
+                        <li>La solución es válida.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="solution">
+                <div class="solution-title">Soluciones:</div>
+                <div class="mathbox">
+
+                    \[ x = 5, 7 \]
+                </div>
+            </div>
+            
+            <div class="step-navigation">
+                <button id="prev-btn-1" onclick="navigateSteps(1, -1)" disabled>Paso anterior</button>
+                <div class="step-indicator" id="step-indicator-1">Paso 1 de 7</div>
+                <button id="next-btn-1" onclick="navigateSteps(1, 1)">Siguiente paso</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ejercicio 2 -->
+    <div class="equation-container" id="equation2">
+        <div class="equation-header">
+            <div class="equation-title">Ejercicio 2: \(\sqrt{7-2x}-\sqrt{5+x}=\sqrt{4+3x}\)</div>
+        </div>
+        <div class="equation-body">
+            <div class="step-container">
+                <div class="step-header">Ecuación original:</div>
+                <div class="mathbox">
+
+                    \[ \sqrt{7-2x}-\sqrt{5+x}=\sqrt{4+3x} \]
+                </div>
+            </div>
+            
+            <div class="restriction">
+                <div class="restriction-title">Restricciones:</div>
+                <p>Los radicandos deben ser no negativos:</p>
+                <div class="mathbox">
+
+                    \[ 7-2x \geq 0 \implies -2x \geq -7 \implies x \leq \frac{7}{2} = 3.5 \]
+
+                    \[ 5+x \geq 0 \implies x \geq -5 \]
+
+                    \[ 4+3x \geq 0 \implies 3x \geq -4 \implies x \geq -\frac{4}{3} \approx -1.33 \]
+                </div>
+                <p>La restricción combinada es:</p>
+                <div class="mathbox">
+
+                    \[ -\frac{4}{3} \leq x \leq \frac{7}{2} \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="2" data-step="1">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Elevar ambos lados al cuadrado. (Esto puede introducir soluciones extrañas).</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ (\sqrt{7-2x}-\sqrt{5+x})^2 = (\sqrt{4+3x})^2 \]
+
+                    \[ (\sqrt{7-2x})^2 - 2\sqrt{7-2x}\sqrt{5+x} + (\sqrt{5+x})^2 = 4+3x \]
+
+                    \[ (7-2x) - 2\sqrt{(7-2x)(5+x)} + (5+x) = 4+3x \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="2" data-step="2">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Simplificar la expresión.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ 7 - 2x - 2\sqrt{35 + 7x - 10x - 2x^2} + 5 + x = 4+3x \]
+
+                    \[ 12 - x - 2\sqrt{35 - 3x - 2x^2} = 4+3x \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="2" data-step="3">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Aislar el término con la raíz cuadrada.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ -2\sqrt{35 - 3x - 2x^2} = 4 + 3x - 12 + x \]
+
+                    \[ -2\sqrt{35 - 3x - 2x^2} = 4x - 8 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="2" data-step="4">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Dividir ambos lados por -2.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ \sqrt{35 - 3x - 2x^2} = -2x + 4 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="2" data-step="5">
+                <div class="restriction">
+                    <div class="restriction-title">Restricción implícita:</div>
+                    <p>El lado derecho debe ser no negativo:</p>
+                    <div class="mathbox">
+
+                        \[ -2x+4 \geq 0 \implies -2x \geq -4 \implies x \leq 2 \]
+                    </div>
+                    <p>Combinando con la restricción principal:</p>
+                    <div class="mathbox">
+
+                        \[ -\frac{4}{3} \leq x \leq 2 \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step" data-equation="2" data-step="6">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Elevar ambos lados al cuadrado nuevamente.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ (\sqrt{35 - 3x - 2x^2})^2 = (-2x + 4)^2 \]
+
+                    \[ 35 - 3x - 2x^2 = 4x^2 - 16x + 16 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="2" data-step="7">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Reorganizar la ecuación para formar una ecuación cuadrática.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ 0 = 4x^2 + 2x^2 - 16x + 3x + 16 - 35 \]
+
+                    \[ 0 = 6x^2 - 13x - 19 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="2" data-step="8">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Utilizar la fórmula general para resolver la ecuación cuadrática, donde \(a=6\), \(b=-13\), \(c=-19\).</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \]
+
+                    \[ x = \frac{-(-13) \pm \sqrt{(-13)^2 - 4(6)(-19)}}{2(6)} \]
+
+                    \[ x = \frac{13 \pm \sqrt{169 + 456}}{12} \]
+
+                    \[ x = \frac{13 \pm \sqrt{625}}{12} \]
+
+                    \[ x = \frac{13 \pm 25}{12} \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="2" data-step="9">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Calcular las dos posibles soluciones.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ x_1 = \frac{13 + 25}{12} = \frac{38}{12} = \frac{19}{6} \approx 3.17 \]
+
+                    \[ x_2 = \frac{13 - 25}{12} = \frac{-12}{12} = -1 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="2" data-step="10">
+                <div class="verification">
+                    <div class="verification-title">Verificación:</div>
+                    <p><strong>Para \(x=\frac{19}{6} \approx 3.17\):</strong></p>
+                    <ul>
+                        <li>Restricción \(-\frac{4}{3} \leq \frac{19}{6} \leq 2\) es falsa porque \(\frac{19}{6} > 2\).</li>
+                        <li>\(x=\frac{19}{6}\) es una solución extraña.</li>
+                    </ul>
+                    
+                    <p class="mt-2"><strong>Para \(x=-1\):</strong></p>
+                    <ul>
+                        <li>Restricción \(-\frac{4}{3} \leq -1 \leq 2\) es verdadera.</li>
+                        <li>Sustituyendo en el lado izquierdo:
+
+                            \[ \sqrt{7-2(-1)}-\sqrt{5+(-1)} = \sqrt{7+2}-\sqrt{4} = \sqrt{9}-2 = 3-2 = 1 \]
+                        </li>
+                        <li>Sustituyendo en el lado derecho:
+
+                            \[ \sqrt{4+3(-1)} = \sqrt{4-3} = \sqrt{1} = 1 \]
+                        </li>
+                        <li>\(1 = 1\). La solución es válida.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="solution">
+                <div class="solution-title">Solución:</div>
+                <div class="mathbox">
+
+                    \[ x = -1 \]
+                </div>
+            </div>
+            
+            <div class="step-navigation">
+                <button id="prev-btn-2" onclick="navigateSteps(2, -1)" disabled>Paso anterior</button>
+                <div class="step-indicator" id="step-indicator-2">Paso 1 de 10</div>
+                <button id="next-btn-2" onclick="navigateSteps(2, 1)">Siguiente paso</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ejercicio 3 -->
+    <div class="equation-container" id="equation3">
+        <div class="equation-header">
+            <div class="equation-title">Ejercicio 3: \(\sqrt{2\sqrt{x+1}}=\sqrt{3x-5}\)</div>
+        </div>
+        <div class="equation-body">
+            <div class="step-container">
+                <div class="step-header">Ecuación original:</div>
+                <div class="mathbox">
+
+                    \[ \sqrt{2\sqrt{x+1}}=\sqrt{3x-5} \]
+                </div>
+            </div>
+            
+            <div class="restriction">
+                <div class="restriction-title">Restricciones:</div>
+                <p>Los radicandos deben ser no negativos:</p>
+                <div class="mathbox">
+
+                    \[ x+1 \geq 0 \implies x \geq -1 \]
+
+                    \[ 3x-5 \geq 0 \implies 3x \geq 5 \implies x \geq \frac{5}{3} \approx 1.67 \]
+                </div>
+                <p>Además, el radicando bajo la primera raíz cuadrada debe ser no negativo:</p>
+                <div class="mathbox">
+
+                    \[ 2\sqrt{x+1} \geq 0 \]
+                </div>
+                <p>Lo cual es cierto siempre que \(x+1 \geq 0\).</p>
+                <p>La restricción combinada es:</p>
+                <div class="mathbox">
+
+                    \[ x \geq \frac{5}{3} \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="3" data-step="1">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Elevar ambos lados al cuadrado para eliminar las raíces cuadradas externas.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ (\sqrt{2\sqrt{x+1}})^2 = (\sqrt{3x-5})^2 \]
+
+                    \[ 2\sqrt{x+1} = 3x - 5 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="3" data-step="2">
+                <div class="restriction">
+                    <div class="restriction-title">Restricción implícita:</div>
+                    <p>El lado derecho debe ser no negativo:</p>
+                    <div class="mathbox">
+
+                        \[ 3x-5 \geq 0 \implies x \geq \frac{5}{3} \]
+                    </div>
+                    <p>Esta es la misma restricción principal.</p>
+                </div>
+            </div>
+            
+            <div class="step" data-equation="3" data-step="3">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Elevar ambos lados al cuadrado nuevamente para eliminar la raíz cuadrada restante.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ (2\sqrt{x+1})^2 = (3x - 5)^2 \]
+
+                    \[ 4(x+1) = 9x^2 - 30x + 25 \]
+
+                    \[ 4x + 4 = 9x^2 - 30x + 25 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="3" data-step="4">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Reorganizar la ecuación para formar una ecuación cuadrática.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ 0 = 9x^2 - 30x - 4x + 25 - 4 \]
+
+                    \[ 0 = 9x^2 - 34x + 21 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="3" data-step="5">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Utilizar la fórmula general para resolver la ecuación cuadrática, donde \(a=9\), \(b=-34\), \(c=21\).</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \]
+
+                    \[ x = \frac{-(-34) \pm \sqrt{(-34)^2 - 4(9)(21)}}{2(9)} \]
+
+                    \[ x = \frac{34 \pm \sqrt{1156 - 756}}{18} \]
+
+                    \[ x = \frac{34 \pm \sqrt{400}}{18} \]
+
+                    \[ x = \frac{34 \pm 20}{18} \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="3" data-step="6">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Calcular las dos posibles soluciones.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ x_1 = \frac{34 + 20}{18} = \frac{54}{18} = 3 \]
+
+                    \[ x_2 = \frac{34 - 20}{18} = \frac{14}{18} = \frac{7}{9} \approx 0.78 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="3" data-step="7">
+                <div class="verification">
+                    <div class="verification-title">Verificación:</div>
+                    <p><strong>Para \(x=3\):</strong></p>
+                    <ul>
+                        <li>Restricción \(3 \geq \frac{5}{3}\) es verdadera.</li>
+                        <li>Sustituyendo en el lado izquierdo:
+
+                            \[ \sqrt{2\sqrt{3+1}} = \sqrt{2\sqrt{4}} = \sqrt{2 \times 2} = \sqrt{4} = 2 \]
+                        </li>
+                        <li>Sustituyendo en el lado derecho:
+
+                            \[ \sqrt{3(3)-5} = \sqrt{9-5} = \sqrt{4} = 2 \]
+                        </li>
+                        <li>\(2 = 2\). La solución es válida.</li>
+                    </ul>
+                    
+                    <p class="mt-2"><strong>Para \(x=\frac{7}{9} \approx 0.78\):</strong></p>
+                    <ul>
+                        <li>Restricción \(\frac{7}{9} \geq \frac{5}{3}\) es falsa porque \(\frac{7}{9} \approx 0.78\) y \(\frac{5}{3} \approx 1.67\).</li>
+                        <li>\(x=\frac{7}{9}\) es una solución extraña.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="solution">
+                <div class="solution-title">Solución:</div>
+                <div class="mathbox">
+
+                    \[ x = 3 \]
+                </div>
+            </div>
+            
+            <div class="step-navigation">
+                <button id="prev-btn-3" onclick="navigateSteps(3, -1)" disabled>Paso anterior</button>
+                <div class="step-indicator" id="step-indicator-3">Paso 1 de 7</div>
+                <button id="next-btn-3" onclick="navigateSteps(3, 1)">Siguiente paso</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ejercicio 4 -->
+    <div class="equation-container" id="equation4">
+        <div class="equation-header">
+            <div class="equation-title">Ejercicio 4: \(\sqrt{1+4\sqrt{x}}=\sqrt{x}+1\)</div>
+        </div>
+        <div class="equation-body">
+            <div class="step-container">
+                <div class="step-header">Ecuación original:</div>
+                <div class="mathbox">
+
+                    \[ \sqrt{1+4\sqrt{x}}=\sqrt{x}+1 \]
+                </div>
+            </div>
+            
+            <div class="restriction">
+                <div class="restriction-title">Restricciones:</div>
+                <p>Los radicandos deben ser no negativos:</p>
+                <div class="mathbox">
+
+                    \[ x \geq 0 \]
+
+                    \[ 1+4\sqrt{x} \geq 0 \]
+                </div>
+                <p>Lo cual es cierto siempre que \(x \geq 0\).</p>
+                <p>La restricción principal es:</p>
+                <div class="mathbox">
+
+                    \[ x \geq 0 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="4" data-step="1">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Elevar ambos lados al cuadrado.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ (\sqrt{1+4\sqrt{x}})^2 = (\sqrt{x}+1)^2 \]
+
+                    \[ 1+4\sqrt{x} = (\sqrt{x})^2 + 2(\sqrt{x})(1) + 1^2 \]
+
+                    \[ 1+4\sqrt{x} = x + 2\sqrt{x} + 1 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="4" data-step="2">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Aislar el término con la raíz cuadrada en un lado.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ 4\sqrt{x} - 2\sqrt{x} = x + 1 - 1 \]
+
+                    \[ 2\sqrt{x} = x \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="4" data-step="3">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Elevar ambos lados al cuadrado nuevamente.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ (2\sqrt{x})^2 = x^2 \]
+
+                    \[ 4x = x^2 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="4" data-step="4">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Reorganizar la ecuación y factorizar para resolver la ecuación cuadrática.</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ 0 = x^2 - 4x \]
+
+                    \[ 0 = x(x - 4) \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="4" data-step="5">
+                <div class="concept">
+                    <div class="concept-title">Concepto:</div>
+                    <p>Establecer cada factor igual a cero y resolver para \(x\).</p>
+                </div>
+                <div class="mathbox">
+
+                    \[ x = 0 \]
+
+                    \[ x - 4 = 0 \implies x = 4 \]
+                </div>
+            </div>
+            
+            <div class="step" data-equation="4" data-step="6">
+                <div class="verification">
+                    <div class="verification-title">Verificación:</div>
+                    <p><strong>Para \(x=0\):</strong></p>
+                    <ul>
+                        <li>Restricción \(0 \geq 0\) es verdadera.</li>
+                        <li>Sustituyendo en el lado izquierdo:
+
+                            \[ \sqrt{1+4\sqrt{0}} = \sqrt{1+4(0)} = \sqrt{1} = 1 \]
+                        </li>
+                        <li>Sustituyendo en el lado derecho:
+
+                            \[ \sqrt{0}+1 = 0+1 = 1 \]
+                        </li>
+                        <li>\(1 = 1\). La solución es válida.</li>
+                    </ul>
+                    
+                    <p class="mt-2"><strong>Para \(x=4\):</strong></p>
+                    <ul>
+                        <li>Restricción \(4 \geq 0\) es verdadera.</li>
+                        <li>Sustituyendo en el lado izquierdo:
+
+                            \[ \sqrt{1+4\sqrt{4}} = \sqrt{1+4(2)} = \sqrt{1+8} = \sqrt{9} = 3 \]
+                        </li>
+                        <li>Sustituyendo en el lado derecho:
+
+                            \[ \sqrt{4}+1 = 2+1 = 3 \]
+                        </li>
+                        <li>\(3 = 3\). La solución es válida.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="solution">
+                <div class="solution-title">Soluciones:</div>
+                <div class="mathbox">
+
+                    \[ x = 0, 4 \]
+                </div>
+            </div>
+            
+            <div class="step-navigation">
+                <button id="prev-btn-4" onclick="navigateSteps(4, -1)" disabled>Paso anterior</button>
+                <div class="step-indicator" id="step-indicator-4">Paso 1 de 6</div>
+                <button id="next-btn-4" onclick="navigateSteps(4, 1)">Siguiente paso</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-10 bg-blue-50 p-4 rounded-md mb-8">
+        <h2 class="text-xl font-bold text-blue-800 mb-3 border-0 pl-0">Conclusión y Recomendaciones</h2>
+        <p>La solución de ecuaciones con radicales requiere un análisis cuidadoso que incluye:</p>
+        <ol class="list-decimal pl-6 mt-2">
+            <li><strong>Establecer restricciones</strong> para los dominios de las funciones radicales</li>
+            <li><strong>Elevar al cuadrado</strong> para eliminar los radicales (prestando atención a posibles soluciones extrañas)</li>
+            <li><strong>Resolver las ecuaciones resultantes</strong> aplicando técnicas algebraicas adecuadas</li>
+            <li><strong>Verificar todas las soluciones</strong> en la ecuación original para descartar soluciones extrañas</li>
+        </ol>
+        <p class="mt-3">Las soluciones extrañas suelen aparecer porque al elevar ambos lados de una ecuación al cuadrado se pierde la información sobre el signo. Por eso, la verificación en la ecuación original es un paso esencial en el proceso de resolución.</p>
+    </div>
+    
+    <script>
+        // Inicializar la aplicación ocultando todos los pasos excepto el primero
+        document.addEventListener('DOMContentLoaded', function() {
+            // Para cada ecuación, mostrar solo el primer paso
+            for (let i = 1; i <= 4; i++) {
+                initSteps(i);
+            }
+            
+            // Asegurar que MathJax renderice correctamente todas las fórmulas
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typeset();
+            }
+        });
+        
+        // Inicializar los pasos para una ecuación específica
+        function initSteps(equationId) {
+            const steps = document.querySelectorAll(`[data-equation="${equationId}"]`);
+            
+            steps.forEach((step, index) => {
+                if (index > 0) {
+                    step.classList.add('hidden');
+                }
+            });
+            
+            updateStepIndicator(equationId, 1, steps.length);
+        }
+        
+        // Navegar entre pasos
+        function navigateSteps(equationId, direction) {
+            const steps = document.querySelectorAll(`[data-equation="${equationId}"]`);
+            let currentStep = 0;
+            
+            // Encontrar el paso actual
+            steps.forEach((step, index) => {
+                if (!step.classList.contains('hidden')) {
+                    currentStep = index;
+                }
+            });
+            
+            // Calcular el nuevo paso
+            let newStep = currentStep + direction;
+            
+            // Validar límites
+            if (newStep < 0) newStep = 0;
+            if (newStep >= steps.length) newStep = steps.length - 1;
+            
+            // Ocultar todos los pasos
+            steps.forEach(step => step.classList.add('hidden'));
+            
+            // Mostrar el paso actual
+            steps[newStep].classList.remove('hidden');
+            
+            // Actualizar el indicador de pasos
+            updateStepIndicator(equationId, newStep + 1, steps.length);
+            
+            // Habilitar/deshabilitar botones
+            document.getElementById(`prev-btn-${equationId}`).disabled = (newStep === 0);
+            document.getElementById(`next-btn-${equationId}`).disabled = (newStep === steps.length - 1);
+            
+            // Asegurar que MathJax renderice correctamente las fórmulas visibles
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typeset();
+            }
+        }
+        
+        // Actualizar el indicador de pasos
+        function updateStepIndicator(equationId, current, total) {
+            const indicator = document.getElementById(`step-indicator-${equationId}`);
+            if (indicator) {
+                indicator.textContent = `Paso ${current} de ${total}`;
+            }
+        }
+    </script>
+</body>
+</html>
